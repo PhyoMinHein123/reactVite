@@ -110,12 +110,12 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
                     <label htmlFor="genderBox">Gender</label>
                     <div name="genderBox" className="flex gap-10">
                       <div className="flex gap-2">
-                        <input type="radio" id="male" name="gender" value="male" onChange={(e)=>onChangeData(e)}/>
+                        <input type="radio" id="male" name="gender" checked={data.gender === "Male"} value="male" onChange={(e)=>onChangeData(e)}/>
                         <label htmlFor="male" className='labelTitle'>Male</label>
                       </div>
 
                       <div className="flex gap-2">
-                        <input type="radio" id="female" name="gender" value="female" onChange={(e)=>onChangeData(e)}/>
+                        <input type="radio" id="female" name="gender" checked={data.gender === "Female"} value="female" onChange={(e)=>onChangeData(e)}/>
                         <label htmlFor="female" className='labelTitle'>Female</label>
                       </div>
                     </div>
@@ -123,12 +123,12 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
 
                   <div className='flex flex-col'>
                     <label htmlFor="phone">Contact Phone No.</label>
-                    <input type="text" name='phone' className='formInput' onChange={(e)=>onChangeData(e)} />
+                    <input type="text" value={data.phone} name='phone' className='formInput' onChange={(e)=>onChangeData(e)} />
                   </div>
 
                   <div className='flex flex-col'>
                     <label htmlFor="city">City</label>
-                    <input type="text" name='city' className='formInput' onChange={(e)=>onChangeData(e)} />
+                    <input type="text" value={data.city} name='city' className='formInput' onChange={(e)=>onChangeData(e)} />
                   </div>
 
                 </div>
@@ -141,7 +141,7 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
                   <div className='flex flex-col'>
                     <label htmlFor="petName">Status</label>
                     {/* <input type="text" name='petName' className='formInput' placeholder='please choose status' /> */}
-                    <select name="status" id="" onChange={(e)=>onChangeData(e)} placeholder="Status" required>
+                    <select value={data.status} name="status" id="" onChange={(e)=>onChangeData(e)} placeholder="Status" required>
                     <option disabled>Choose Status</option>
                       <option value="1">Allergy</option>
                       <option value="2">Sick</option>
@@ -151,22 +151,22 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
 
                   <div className='flex flex-col'>
                     <label htmlFor="breed">Breed</label>
-                    <input type="text" name='breed' className='formInput' placeholder='please choose breed' onChange={(e)=>onChangeData(e)} />
+                    <input type="text" value={data.breed} name='breed' className='formInput' placeholder='please choose breed' onChange={(e)=>onChangeData(e)} />
                   </div>
 
                   <div className='flex flex-col'>
                     <label htmlFor="dob">Date of Birth</label>
-                    <input type="date" name='dob' className='formInput' onChange={(e)=>onChangeData(e)} />
+                    <input type="date" value={data.dob} name='dob' className='formInput' onChange={(e)=>onChangeData(e)} />
                   </div>
 
                   <div className='flex flex-col'>
                     <label htmlFor="address">Address</label>
-                    <input type="text" name='address' className='formInput' onChange={(e)=>onChangeData(e)} />
+                    <input type="text" value={data.address} name='address' className='formInput' onChange={(e)=>onChangeData(e)} />
                   </div>
 
                   <div className='flex flex-col'>
                     <label htmlFor="township">Township</label>
-                    <input type="text" name='township' className='formInput' placeholder='please choose township' onChange={(e)=>onChangeData(e)} />
+                    <input type="text" value={data.township} name='township' className='formInput' placeholder='please choose township' onChange={(e)=>onChangeData(e)} />
                   </div>
 
                 </div>
@@ -177,7 +177,7 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
               <div className="col-start-1 col-span-2  ">
                 <div className="flex w-full gap-5 justify-center ">
                   <button onClick={()=> {setModel(data), setShowModalActive(false), notify()}} className="saveBtn">
-                    Save
+                    {paramsData.parent == '' ? 'Save':'Update'}
                   </button>
                   <button className="cancelBtn" onClick={() => setShowModalActive(false)}>
                     Cancel

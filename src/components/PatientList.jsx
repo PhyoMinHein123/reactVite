@@ -32,9 +32,9 @@ const PatientList = ({ active }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([
-    { id: 'B-0001', name: 'Milo', status: '1', parent: 'Phyo Min', breed: 'Rottweiler', gender: 'Male', dob: '23.3.2000', phone: '09 877 766 345', address: 'No.35 Thirihaymar St, Zawana Qtr', township: 'Yankin', city: 'Yangon' },
-    { id: 'B-0002', name: 'Bella', status: '2', parent: 'Zayar', breed: 'Chiwhawha', gender: 'Female', dob: '3.3.2001', phone: '09 232 766 345', address: 'No. 90 BoAung St, MarGa Qtr', township: 'Yankin', city: 'Yangon' },
-    { id: 'B-0003', name: 'Kitty', status: '1', parent: 'Yae', breed: 'Golden Reteriver', gender: 'Male', dob: '2.3.2002', phone: '09 877 121 345', address: 'No. 32, Mahar Ban Lann, Ta Mar Di Qtr', township: 'Yankin', city: 'Yangon' }
+    { id: 'B-0001', name: 'Milo', status: '1', parent: 'Phyo Min', breed: 'Rottweiler', gender: 'Male', dob: '2023-12-07', phone: '09 877 766 345', address: 'No.35 Thirihaymar St, Zawana Qtr', township: 'Yankin', city: 'Yangon' },
+    { id: 'B-0002', name: 'Bella', status: '2', parent: 'Zayar', breed: 'Chiwhawha', gender: 'Female', dob: '2022-01-07', phone: '09 232 766 345', address: 'No. 90 BoAung St, MarGa Qtr', township: 'Yankin', city: 'Yangon' },
+    { id: 'B-0003', name: 'Kitty', status: '1', parent: 'Yae', breed: 'Golden Reteriver', gender: 'Male', dob: '2021-02-06', phone: '09 877 121 345', address: 'No. 32, Mahar Ban Lann, Ta Mar Di Qtr', township: 'Yankin', city: 'Yangon' }
   ])
 
   const [paramsData, setParamsData] = useState({})
@@ -42,7 +42,8 @@ const PatientList = ({ active }) => {
   // get data from modal
   const modelData = (e) =>
   [
-    setData([e, ...data])
+    paramsData.parent == '' ? setData([e, ...data]) : data[e.id - 1] = e, setData(data)
+
   ]
 
   active(showModal)
@@ -123,7 +124,7 @@ const PatientList = ({ active }) => {
 
           {/* right container */}
           <div className="md:flex md:flex-col gap-5 justify-center md:justify-end md:items-center shrink-0 content-start md:content-end md:h-full">
-            <div className="blueBtn mb-5 md:mb-0 flex items-center justify-center gap-2 self-center" onClick={()=>{setShowModal(true)}}>
+            <div className="blueBtn mb-5 md:mb-0 flex items-center justify-center gap-2 self-center" onClick={()=>{setParamsData({ id: '', name: '', status: '', parent: '', breed: '', gender: '', dob: '', phone: '', address: '', township: '', city: '' }),setShowModal(true)}}>
               <img src={Add} alt="" className='w-[10px] h-[10px]' />
               Add new patient
             </div>
@@ -168,13 +169,13 @@ const PatientList = ({ active }) => {
                     <td>{d.parent}</td>
                     <td>{d.breed}</td>
                     <td>{d.gender}</td>
-                    <td>{d.dob}</td>
+                    <td>{(new Date(d.dob)).toLocaleDateString('en-GB').replace(/\//g, '.')}</td>
                     <td>{d.phone}</td>
                     <td>{d.address} {d.township} {d.city}</td>
                     <td className='min-w-[50px]'>
                       <Dropdown label="" placement="left" className='w-[130px] dropdownOption'
                         renderTrigger={() => <span><IconDotsVertical size={17} color='#54bab9' /></span>}>
-                        <Dropdown.Item className='bg-stone-100 dropdownItems' onClick={()=>{setShowModal(true),setParamsData(data[i])}} ><IconPencil size={17} color='#a2e22d' /><span>Edit</span></Dropdown.Item>
+                        <Dropdown.Item className='bg-stone-100 dropdownItems' onClick={()=>{setParamsData(data[i]),setShowModal(true)}} ><IconPencil size={17} color='#a2e22d' /><span>Edit</span></Dropdown.Item>
                         <Dropdown.Item className='bg-stone-100 dropdownItems' onClick={() => { deleteData(i) }}><FITrash size={17} color='red' /><span>Delete</span></Dropdown.Item>
                       </Dropdown>
                     </td>
