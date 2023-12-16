@@ -17,14 +17,13 @@ const ModalWrapper = styled.div`
   border-radius: 10px;
 `;
 
-export const Modal = ({ show, setShowModalActive, setModel }) => {
+export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
 
   const generateUniqueId = () => {
     // return 'B-' + Math.random().toString(4);
     return `B-${Math.random().toString().slice(15)}`;
   };
   // console.log('id >>>> ',generateUniqueId())
-
   
   const [data, setData ] = useState({})
 
@@ -53,6 +52,11 @@ export const Modal = ({ show, setShowModalActive, setModel }) => {
     },
     [show, setShowModalActive]
   );
+
+  useEffect(()=>{
+    console.log(paramsData)
+    setData(paramsData)
+  },[paramsData])
 
   useEffect(
     () => {
@@ -94,12 +98,12 @@ export const Modal = ({ show, setShowModalActive, setModel }) => {
                 <div className="flex flex-col gap-5">
                   <div className='flex flex-col'>
                     <label htmlFor="petName">Pet Name</label>
-                    <input type="text" name="name" onChange={(e)=>onChangeData(e)} className='formInput' />
+                    <input type="text" value={data.name} name="name" onChange={(e)=>onChangeData(e)} className='formInput' />
                   </div>
 
                   <div className='flex flex-col'>
                     <label htmlFor="pawrent">Pawrent</label>
-                    <input type="text" name='parent' onChange={(e)=>onChangeData(e)} className='formInput' />
+                    <input type="text" value={data.parent} name='parent' onChange={(e)=>onChangeData(e)} className='formInput' />
                   </div>
 
                   <div className='flex flex-col gap-[9px] '>

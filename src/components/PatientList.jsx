@@ -36,26 +36,17 @@ const PatientList = ({ active }) => {
     { id: 'B-0002', name: 'Bella', status: '2', parent: 'Zayar', breed: 'Chiwhawha', gender: 'Female', dob: '3.3.2001', phone: '09 232 766 345', address: 'No. 90 BoAung St, MarGa Qtr', township: 'Yankin', city: 'Yangon' },
     { id: 'B-0003', name: 'Kitty', status: '1', parent: 'Yae', breed: 'Golden Reteriver', gender: 'Male', dob: '2.3.2002', phone: '09 877 121 345', address: 'No. 32, Mahar Ban Lann, Ta Mar Di Qtr', township: 'Yankin', city: 'Yangon' }
   ])
-  // console.log('before clk >> ', showModal)
+
+  const [paramsData, setParamsData] = useState({})
 
   // get data from modal
   const modelData = (e) =>
   [
     setData([e, ...data])
   ]
-  // {
-  //   setData({
-  //     ...data,
-  //     [e.name]: e.value
-  //   });
-  // }
 
-  const openModal = () => {
-    // console.log('openModal called')
-    setShowModal(true)
-  };
   active(showModal)
-  // console.log('transfer called', showModal)
+ 
 
   // filter
   const statusBtn = useRef(null)
@@ -74,10 +65,11 @@ const PatientList = ({ active }) => {
 
   // option box
   const deleteData = (id) => {
-
-    delete data[id];
-    modelData(data)
+    
+    setData((data)=> data.filter(roleId => roleId !== id))
     console.log(data)
+
+
   }
 
   // option box end
@@ -131,7 +123,7 @@ const PatientList = ({ active }) => {
 
           {/* right container */}
           <div className="md:flex md:flex-col gap-5 justify-center md:justify-end md:items-center shrink-0 content-start md:content-end md:h-full">
-            <div className="blueBtn mb-5 md:mb-0 flex items-center justify-center gap-2 self-center" onClick={openModal}>
+            <div className="blueBtn mb-5 md:mb-0 flex items-center justify-center gap-2 self-center" onClick={()=>{setShowModal(true)}}>
               <img src={Add} alt="" className='w-[10px] h-[10px]' />
               Add new patient
             </div>
@@ -182,7 +174,7 @@ const PatientList = ({ active }) => {
                     <td className='min-w-[50px]'>
                       <Dropdown label="" placement="left" className='w-[130px] dropdownOption'
                         renderTrigger={() => <span><IconDotsVertical size={17} color='#54bab9' /></span>}>
-                        <Dropdown.Item className='bg-stone-100 dropdownItems'><IconPencil size={17} color='#a2e22d' /><span>Edit</span></Dropdown.Item>
+                        <Dropdown.Item className='bg-stone-100 dropdownItems' onClick={()=>{setShowModal(true),setParamsData(data[i])}} ><IconPencil size={17} color='#a2e22d' /><span>Edit</span></Dropdown.Item>
                         <Dropdown.Item className='bg-stone-100 dropdownItems' onClick={() => { deleteData(i) }}><FITrash size={17} color='red' /><span>Delete</span></Dropdown.Item>
                       </Dropdown>
                     </td>
@@ -199,7 +191,7 @@ const PatientList = ({ active }) => {
         {/* Add Modal */}
 
         <div className={showModal ? 'fixed top-[50%] left-[50%] transition-transform -translate-x-1/2 -translate-y-1/2 shadow-lg' : ''}>
-          <Modal show={showModal} setShowModalActive={setShowModal} setModel={e => { modelData(e) }} />
+          <Modal show={showModal} setShowModalActive={setShowModal} paramsData={paramsData} setModel={e => {modelData(e)}} />
           {/* {console.log('*** >>> ', typeof(showModal))} */}
         </div>
 
