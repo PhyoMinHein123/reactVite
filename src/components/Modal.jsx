@@ -17,7 +17,7 @@ const ModalWrapper = styled.div`
   border-radius: 10px;
 `;
 
-export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
+export const Modal = ({ show, setShowModalActive, createData, updateData, paramsData }) => {
 
   const generateUniqueId = () => {
     // return 'B-' + Math.random().toString(4);
@@ -54,7 +54,6 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
   );
 
   useEffect(()=>{
-    console.log(paramsData)
     setData(paramsData)
   },[paramsData])
 
@@ -69,6 +68,14 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
   // toast
   const notify = () => {
     toast.success('Patient is successfully created!')
+  }
+
+  const saveData = () => {
+    createData(data), setShowModalActive(false), notify()
+  }
+
+  const update = () => {
+    updateData(data.id, data), setShowModalActive(false), notify()
   }
 
 
@@ -110,12 +117,12 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
                     <label htmlFor="genderBox">Gender</label>
                     <div name="genderBox" className="flex gap-10">
                       <div className="flex gap-2">
-                        <input type="radio" id="male" name="gender" checked={data.gender === "Male"} value="male" onChange={(e)=>onChangeData(e)}/>
+                        <input type="radio" id="male" name="gender" checked={data.gender === "Male"} value="Male" onChange={(e)=>onChangeData(e)}/>
                         <label htmlFor="male" className='labelTitle'>Male</label>
                       </div>
 
                       <div className="flex gap-2">
-                        <input type="radio" id="female" name="gender" checked={data.gender === "Female"} value="female" onChange={(e)=>onChangeData(e)}/>
+                        <input type="radio" id="female" name="gender" checked={data.gender === "Female"} value="Female" onChange={(e)=>onChangeData(e)}/>
                         <label htmlFor="female" className='labelTitle'>Female</label>
                       </div>
                     </div>
@@ -176,7 +183,7 @@ export const Modal = ({ show, setShowModalActive, setModel, paramsData }) => {
               {/* buttons */}
               <div className="col-start-1 col-span-2  ">
                 <div className="flex w-full gap-5 justify-center ">
-                  <button onClick={()=> {setModel(data), setShowModalActive(false), notify()}} className="saveBtn">
+                  <button onClick={()=> {paramsData.parent == '' ? saveData() : update()}} className="saveBtn">
                     {paramsData.parent == '' ? 'Save':'Update'}
                   </button>
                   <button className="cancelBtn" onClick={() => setShowModalActive(false)}>
